@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Správa nemovitostí Praha</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --accent: #1e40af;
+        --bg: #f9fafb;
+        --text: #111827;
+        --card: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      button {
+        display: block;
+        margin: 1.5rem auto;
+      }
+      .hlavni-header {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 800px;
+        position: relative;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hlavni-header .overlay {
+        width: 100%;
+        height: 800px;
+        background-image: linear-gradient(
+            135deg,
+            rgb(78, 66, 243),
+            rgb(28, 27, 117)
+          ),
+          url("./img/hero_mobile.jpg");
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: multiply;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      @media (min-width: 577px) and (max-width: 991px) {
+        .hlavni-header .overlay {
+          background-image: linear-gradient(
+              135deg,
+              rgb(78, 66, 243),
+              rgb(28, 27, 117)
+            ),
+            url("./img/hero_tablet.jpg");
+        }
+      }
+
+      @media (min-width: 992px) {
+        .hlavni-header .overlay {
+          background-image: linear-gradient(
+              135deg,
+              rgb(78, 66, 243),
+              rgb(28, 27, 117)
+            ),
+            url("./img/herp_desktop.jpg");
+        }
+      }
+
+      .hlavni-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hlavni-header p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+      }
+
+      .hlavni-header .btn {
+        background-color: #ffffff;
+        color: #000;
+        width: 250px;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        display: block;
+        margin: 1.5rem auto;
+      }
+      nav {
+        background: var(--primary);
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .section {
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .section h2 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      @media (max-width: 768px) {
+        .service-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .service-card {
+        background: #f9f9f9;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-card h3 {
+        margin-top: 0;
+        color: #2a2a2a;
+        font-size: 1.2rem;
+      }
+
+      .service-card p {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .service-icon {
+        font-size: 2.5rem;
+        color: #0077cc;
+      }
+
+      .calculator input,
+      .calculator select {
+        padding: 0.75rem;
+        width: 100%;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+      }
+      .calculator button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 1rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .calculator-result {
+        font-weight: 600;
+        margin-top: 1rem;
+        text-align: center;
+        color: var(--accent);
+      }
+      .calculator {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .calculator-result {
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+
+      #kontakt {
+        background: #f2f2f2;
+        padding: 3rem 1rem;
+        border-top: 1px solid #ddd;
+      }
+
+      #kontakt h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .kontaktni-formular {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .kontaktni-formular label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      .kontaktni-formular input,
+      .kontaktni-formular textarea {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      .kontaktni-formular button {
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .kontaktni-formular button:hover {
+        background-color: #005fa3;
+      }
+
+      .footer {
+        background-color: #1f1f1f;
+        color: #ffffff;
+        padding: 40px 20px 20px;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .footer a {
+        color: #cccccc;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+
+      .footer-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .footer-section {
+        flex: 1 1 300px;
+        margin: 10px 20px;
+      }
+
+      .footer-section h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: #ffffff;
+      }
+
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 8px;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        border-top: 1px solid #444;
+        margin-top: 30px;
+        padding-top: 15px;
+        font-size: 13px;
+        color: #aaaaaa;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hlavni-header">
+      <div class="overlay">
+        <h1>Správa nájemnich domů a bytu</h1>
+        <p>Zajistíme správu, nájemniky i vyběr nájemneho</p>
+        <a href="#kontakt" class="btn">Kontaktujte nás</a>
+      </div>
+    </header>
+
+    <nav>
+      <a href="#sluzby">Služby</a>
+      <a href="#kalkulacka">Kalkulačka</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <section id="sluzby" class="section">
+      <h2>Naše služby</h2>
+      <p>
+        Specializujeme se na komplexní správu nájemních domů a bytů určených k
+        pronájmu.
+      </p>
+
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-tools"></i></div>
+          <h3>Technická správa</h3>
+          <p>
+            Zajištění provozuschopnosti domu, pravidelné kontroly, revize,
+            opravy a řešení havárií.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-coins"></i></div>
+          <h3>Ekonomická správa</h3>
+          <p>
+            Sledování nákladů a výnosů, vyúčtování služeb, reporting a finanční
+            přehledy pro majitele.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+          <h3>Administrativní správa</h3>
+          <p>
+            Vedení dokumentace, smluvní agenda, správa pojistek a komunikace s
+            úřady.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-user-check"></i></div>
+          <h3>Správa nájemců</h3>
+          <p>
+            Vyhledávání nových nájemníků, předávání bytů, výběr nájemného,
+            řešení závad, stížností a neplatičů.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="kalkulacka" class="section">
+      <h2>Kalkulačka správy nemovitosti</h2>
+      <div class="card calculator">
+        <label for="typ">Typ nemovitosti</label>
+        <select id="typ">
+          <option value="dum">Dům</option>
+          <option value="byt">Byt</option>
+        </select>
+
+        <div id="dum-fields">
+          <label for="jednotky">Počet bytových jednotek</label>
+          <input type="number" id="jednotky" min="1" />
+          <label for="plocha-dum">Celková plocha domu (m²)</label>
+          <input type="number" id="plocha-dum" min="1" />
+        </div>
+
+        <div id="byt-fields" style="display: none">
+          <label for="plocha-byt">Plocha bytu (m²)</label>
+          <input type="number" id="plocha-byt" min="1" />
+
+          <label for="dispozice">Dispozice bytu</label>
+          <select id="dispozice">
+            <option value="1kk">1kk</option>
+            <option value="1+1">1+1</option>
+            <option value="2kk">2kk</option>
+            <option value="2+1">2+1</option>
+            <option value="3kk">3kk</option>
+            <option value="3+1">3+1</option>
+            <option value="4+">4 a více</option>
+          </select>
+        </div>
+
+        <label for="lokalita">Lokalita v Praze</label>
+        <select id="lokalita">
+          <option value="praha1">Praha 1</option>
+          <option value="praha2">Praha 2</option>
+          <option value="praha3">Praha 3</option>
+          <option value="praha4">Praha 4</option>
+          <option value="praha5">Praha 5</option>
+        </select>
+
+        <button onclick="spocitejCenu()">Spočítat cenu správy</button>
+        <div class="calculator-result" id="vysledek"></div>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <h2>Kontaktujte nás</h2>
+      <form class="kontaktni-formular" id="kontaktniFormular">
+        <label for="jmeno">Jméno</label>
+        <input type="text" id="jmeno" name="jmeno" required />
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="zprava">Zpráva</label>
+        <textarea id="zprava" name="zprava" rows="5" required></textarea>
+
+        <!-- Skrytá pole z kalkulačky -->
+        <input type="hidden" id="typ-form" name="typ" />
+        <input type="hidden" id="plocha-form" name="plocha" />
+        <input type="hidden" id="dispozice-form" name="dispozice" />
+        <input type="hidden" id="lokalita-form" name="lokalita" />
+
+        <button type="submit">Odeslat</button>
+        <div
+          class="g-recaptcha"
+          data-sitekey="6Ld3gZcrAAAAAIrBHYNv0hsUzADy2lbmRsELreG9"
+        ></div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Kontakt</h3>
+          <p>Správa nájemních domů a bytu</p>
+          <p>Telefon: <a href="tel:+420123456789">+420 123 456 789</a></p>
+          <p>
+            Email: <a href="mailto:info@spravabytu.cz">info@spravabytu.cz</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Rychlé odkazy</h3>
+          <ul>
+            <li><a href="#sluzby">Služby</a></li>
+            <li><a href="#kalkulacka">Kalkulačka</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>O nás</h3>
+          <p>
+            Specializujeme se na komplexní správu nájemních domů a bytů určených
+            k pronájmu v Praze.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; <span id="aktualniRok"></span> SNDB.cz. Všechna práva
+          vyhrazena.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+      // Funkce pro výpočet ceny
+      function spocitejCenu() {
+        const typ = document.getElementById("typ").value;
+        const lokalita = document.getElementById("lokalita").value;
+        const vysledek = document.getElementById("vysledek");
+
+        const cenyLokalit = {
+          praha1: 450,
+          praha2: 400,
+          praha3: 380,
+          praha4: 360,
+          praha5: 350,
+        };
+
+        const cenaZaM2 = cenyLokalit[lokalita] || 350;
+
+        if (typ === "dum") {
+          const jednotky = parseInt(document.getElementById("jednotky").value);
+          const plocha = parseFloat(
+            document.getElementById("plocha-dum").value
+          );
+
+          if (!jednotky || !plocha) {
+            vysledek.innerText = "Zadejte platné údaje pro dům.";
+            return;
+          }
+
+          const celkovyNajem = plocha * cenaZaM2;
+          const sprava = (celkovyNajem + jednotky * 450) * 0.07;
+
+          vysledek.innerHTML = `
+        <p><strong>Odhad nákladů na správu:</strong> ${sprava.toLocaleString()} Kč / měsíc</p>
+        <p><strong>Odhad příjmu z nájmu:</strong> ${celkovyNajem.toLocaleString()} Kč / měsíc</p>
+      `;
+        } else if (typ === "byt") {
+          const plocha = parseFloat(
+            document.getElementById("plocha-byt").value
+          );
+          const dispozice = document.getElementById("dispozice").value;
+
+          if (!plocha) {
+            vysledek.innerText = "Zadejte platné údaje pro byt.";
+            return;
+          }
+
+          const koeficienty = {
+            "1kk": 1,
+            "1+1": 1.05,
+            "2kk": 1.1,
+            "2+1": 1.15,
+            "3kk": 1.2,
+            "3+1": 1.25,
+            "4+": 1.3,
+          };
+
+          const koef = koeficienty[dispozice] || 1;
+          const najem = plocha * cenaZaM2 * koef;
+          const sprava = najem * 0.1;
+
+          vysledek.innerHTML = `
+        <p><strong>Odhad nákladů na správu:</strong> ${sprava.toLocaleString()} Kč / měsíc</p>
+        <p><strong>Odhad příjmu z nájmu:</strong> ${najem.toLocaleString()} Kč / měsíc</p>
+      `;
+        }
+        document.getElementById("typ-form").value =
+          document.getElementById("typ").value;
+        document.getElementById("lokalita-form").value =
+          document.getElementById("lokalita").value;
+
+        if (document.getElementById("typ").value === "dum") {
+          document.getElementById("plocha-form").value =
+            document.getElementById("plocha-dum").value;
+          document.getElementById("dispozice-form").value = "";
+        } else {
+          document.getElementById("plocha-form").value =
+            document.getElementById("plocha-byt").value;
+          document.getElementById("dispozice-form").value =
+            document.getElementById("dispozice").value;
+        }
+      }
+
+      // Spustit až po načtení stránky
+      document.addEventListener("DOMContentLoaded", () => {
+        const typSelect = document.getElementById("typ");
+        const dumFields = document.getElementById("dum-fields");
+        const bytFields = document.getElementById("byt-fields");
+
+        typSelect.addEventListener("change", () => {
+          if (typSelect.value === "dum") {
+            dumFields.style.display = "block";
+            bytFields.style.display = "none";
+          } else {
+            dumFields.style.display = "none";
+            bytFields.style.display = "block";
+          }
+        });
+
+        const form = document.getElementById("kontaktniFormular");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const data = new FormData(form);
+
+          const response = await fetch("https://formspree.io/f/xanboklo", {
+            method: "POST",
+            body: data,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          const recaptchaResponse = grecaptcha.getResponse();
+          if (!recaptchaResponse) {
+            alert("Potvrďte prosím, že nejste robot.");
+            return;
+          }
+          data.append("g-recaptcha-response", recaptchaResponse);
+
+          if (response.ok) {
+            alert("Děkujeme za zprávu. Ozveme se vám co nejdříve.");
+            form.reset();
+          } else {
+            alert("Došlo k chybě při odesílání. Zkuste to prosím znovu.");
+          }
+        });
+
+        document.getElementById("aktualniRok").textContent =
+          new Date().getFullYear();
+      });
+    </script>
+  </body>
+</html>
