@@ -590,9 +590,18 @@
         const form = document.getElementById("kontaktniFormular");
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
-          const data = new FormData(form);
 
-          const response = await fetch("https://formspree.io/f/xanboklo/", {
+          const recaptchaResponse = grecaptcha.getResponse();
+
+          if (!recaptchaResponse) {
+            alert("Prosím, ověřte, že nejste robot.");
+            return;
+          }
+
+          const data = new FormData(form);
+          data.append("g-recaptcha-response", recaptchaResponse);
+
+          const response = await fetch("https://formspree.io/f/xanboklo", {
             method: "POST",
             body: data,
             headers: {
@@ -600,16 +609,10 @@
             },
           });
 
-          const recaptchaResponse = grecaptcha.getResponse();
-          if (!recaptchaResponse) {
-            alert("Potvrďte prosím, že nejste robot.");
-            return;
-          }
-          data.append("g-recaptcha-response", recaptchaResponse);
-
           if (response.ok) {
             alert("Děkujeme za zprávu. Ozveme se vám co nejdříve.");
             form.reset();
+            grecaptcha.reset(); // Reset CAPTCHA
           } else {
             alert("Došlo k chybě při odesílání. Zkuste to prosím znovu.");
           }
